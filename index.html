@@ -1,0 +1,1195 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="theme-color" content="#000000" />
+  <title>Blender Portfolio</title>
+
+  <!--
+    ==========================
+    EASY EDIT ZONE
+    ==========================
+    - Put your 8 PNGs in /images afs: 1.png ... 8.png
+    - Put your music in root as: music.mp3
+  -->
+  <script>
+    window.PORTFOLIO = {
+      name: "𝓙𝓧𝓢𝓣𝓝",
+      tagline: "3D • Modeler • Roblox",
+      imageCount: 8,
+      imageFolder: "images",
+      imageExt: "png",
+      musicFile: "music.mp3",
+
+      // Optional links (leave "" to hide)
+      links: {
+        instagram: "",
+        artstation: "",
+        behance: "",
+        youtube: "",
+        email: ""
+      },
+
+      // Optional: real view counter (requires free CountAPI namespace/key)
+      // Read below where it says COUNTAPI SETUP.
+      countApi: {
+        enabled: false,
+        namespace: "𝓙𝓧𝓢𝓣𝓝 ArtStation",
+        key: "your-portfolio-key-here"
+      }
+    };
+  </script>
+
+  <style>
+/* ===== AUTO WATERMARK ===== */
+:root {
+  --wm: "JXSTN";
+}
+
+.card::before {
+  content: var(--wm);
+  position: absolute;
+  bottom: 14px;
+  right: 16px;
+  font-size: clamp(16px, 1.8vw, 20px);
+  letter-spacing: 0.35em;
+  font-weight: 700;
+  color: rgba(255, 0, 0, 0.65);
+  text-shadow:
+    0 0 6px rgba(255, 0, 0, 0.6),
+    0 0 16px rgba(255, 0, 0, 0.45),
+    0 0 32px rgba(255, 0, 0, 0.25);
+  pointer-events: none;
+  z-index: 3;
+  mix-blend-mode: normal;
+}
+
+/* Fullscreen watermark */
+.lbFrame::after {
+  content: var(--wm);
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  font-size: clamp(40px, 7vw, 80px);
+  letter-spacing: 0.6em;
+  font-weight: 900;
+  color: rgba(255, 0, 0, 0.18);
+  text-shadow:
+    0 0 30px rgba(255, 0, 0, 0.35),
+    0 0 80px rgba(255, 0, 0, 0.25);
+  pointer-events: none;
+  mix-blend-mode: normal;
+  transform: rotate(-15deg);
+}
+
+
+
+
+    /* ==========================
+       RESET + BASE
+    ========================== */
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      background: #000;
+      color: #eaeaea;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      overflow-x: hidden;
+    }
+    a { color: inherit; text-decoration: none; }
+    button { font: inherit; }
+
+    :root {
+      --bg: #000;
+      --fg: #eaeaea;
+      --muted: rgba(255,255,255,.64);
+      --muted2: rgba(255,255,255,.42);
+
+      --glass: rgba(255,255,255,.06);
+      --glass2: rgba(255,255,255,.09);
+      --stroke: rgba(255,255,255,.12);
+
+      --accentA: #7cffd1;
+      --accentB: #7aa7ff;
+      --accentC: #ff4fd8;
+
+      --shadow: 0 20px 80px rgba(0,0,0,.7);
+      --radius: 18px;
+
+      --max: 1320px;
+      --pad: clamp(16px, 4vw, 48px);
+
+      --ease: cubic-bezier(.2,.8,.2,1);
+    }
+
+    /* ==========================
+       BACKGROUND FX (no external files)
+    ========================== */
+    .fx {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: -1;
+      overflow: hidden;
+    }
+
+    /* Animated gradients */
+    .fx .grad {
+      position: absolute;
+      width: 120vmax;
+      height: 120vmax;
+      filter: blur(70px);
+      opacity: .25;
+      transform: translate3d(0,0,0);
+      animation: drift 18s var(--ease) infinite alternate;
+      border-radius: 50%;
+      mix-blend-mode: screen;
+    }
+    .fx .g1 { background: radial-gradient(circle at 30% 30%, var(--accentA), transparent 55%); left: -35vmax; top: -35vmax; animation-duration: 22s; }
+    .fx .g2 { background: radial-gradient(circle at 70% 40%, var(--accentB), transparent 55%); right: -40vmax; top: -20vmax; animation-duration: 26s; }
+    .fx .g3 { background: radial-gradient(circle at 50% 70%, var(--accentC), transparent 60%); left: -20vmax; bottom: -45vmax; animation-duration: 28s; }
+
+    @keyframes drift {
+      from { transform: translate3d(-2%, -2%, 0) scale(1); }
+      to   { transform: translate3d( 2%,  2%, 0) scale(1.06); }
+    }
+
+    /* Vignette */
+    .fx .vignette {
+      position: absolute;
+      inset: -20%;
+      background: radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,.72) 75%, rgba(0,0,0,.92) 100%);
+      opacity: .95;
+    }
+
+    /* Scanlines */
+    .fx .scanlines {
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(
+        to bottom,
+        rgba(255,255,255,.03) 0px,
+        rgba(255,255,255,.03) 1px,
+        rgba(0,0,0,0) 3px,
+        rgba(0,0,0,0) 6px
+      );
+      opacity: .10;
+      mix-blend-mode: overlay;
+      animation: scan 7s linear infinite;
+    }
+    @keyframes scan {
+      from { transform: translateY(-20px); }
+      to   { transform: translateY( 20px); }
+    }
+
+    /* Film grain via CSS noise trick */
+    .fx .grain {
+      position: absolute;
+      inset: -40%;
+      background-image:
+        radial-gradient(circle at 10% 20%, rgba(255,255,255,.06) 0 1px, transparent 2px),
+        radial-gradient(circle at 30% 80%, rgba(255,255,255,.05) 0 1px, transparent 2px),
+        radial-gradient(circle at 70% 40%, rgba(255,255,255,.05) 0 1px, transparent 2px),
+        radial-gradient(circle at 90% 90%, rgba(255,255,255,.06) 0 1px, transparent 2px),
+        radial-gradient(circle at 55% 15%, rgba(255,255,255,.04) 0 1px, transparent 2px),
+        radial-gradient(circle at 40% 55%, rgba(255,255,255,.05) 0 1px, transparent 2px);
+      background-size: 180px 180px;
+      opacity: .10;
+      mix-blend-mode: overlay;
+      animation: grain 1.25s steps(2) infinite;
+      transform: translateZ(0);
+    }
+    @keyframes grain {
+      0%   { transform: translate3d(-2%, -2%, 0); }
+      25%  { transform: translate3d( 2%, -1%, 0); }
+      50%  { transform: translate3d( 1%,  2%, 0); }
+      75%  { transform: translate3d(-1%,  1%, 0); }
+      100% { transform: translate3d(-2%, -2%, 0); }
+    }
+
+    /* Cursor glow */
+    .cursorGlow {
+      position: fixed;
+      width: 560px;
+      height: 560px;
+      border-radius: 50%;
+      pointer-events: none;
+      left: 0; top: 0;
+      transform: translate(-50%, -50%);
+      background: radial-gradient(circle at center,
+        rgba(124,255,209,.18) 0%,
+        rgba(122,167,255,.12) 25%,
+        rgba(255,79,216,.10) 45%,
+        transparent 70%
+      );
+      filter: blur(20px);
+      opacity: .75;
+      mix-blend-mode: screen;
+      transition: opacity .2s var(--ease);
+      z-index: 1;
+    }
+
+    /* ==========================
+       ENTER SCREEN
+    ========================== */
+    #enter {
+      position: fixed;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      background: rgba(0,0,0,.86);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      z-index: 9999;
+      padding: var(--pad);
+    }
+    .enterCard {
+      width: min(720px, 100%);
+      border-radius: 28px;
+      background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.03));
+      border: 1px solid rgba(255,255,255,.14);
+      box-shadow: var(--shadow);
+      padding: clamp(20px, 3.5vw, 34px);
+      overflow: hidden;
+      position: relative;
+    }
+    .enterCard::before {
+      content:"";
+      position:absolute;
+      inset:-2px;
+      background:
+        radial-gradient(circle at 20% 20%, rgba(124,255,209,.28), transparent 40%),
+        radial-gradient(circle at 80% 30%, rgba(122,167,255,.22), transparent 45%),
+        radial-gradient(circle at 50% 85%, rgba(255,79,216,.18), transparent 48%);
+      filter: blur(30px);
+      opacity: .75;
+      z-index: -1;
+    }
+    .enterTop {
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 14px;
+      margin-bottom: 18px;
+    }
+    .pill {
+      font-size: 12px;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.72);
+      padding: 10px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(0,0,0,.18);
+    }
+    .enterTitle {
+      font-size: clamp(28px, 5vw, 50px);
+      line-height: 1.0;
+      letter-spacing: .06em;
+      margin: 6px 0 10px;
+    }
+    .enterTitle .accent {
+      background: linear-gradient(90deg, var(--accentA), var(--accentB), var(--accentC));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    .enterText {
+      color: rgba(255,255,255,.70);
+      font-size: clamp(14px, 1.7vw, 16px);
+      line-height: 1.5;
+      margin-bottom: 18px;
+      max-width: 60ch;
+    }
+
+    .enterActions {
+      display:flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items:center;
+    }
+    .btn {
+      border: 1px solid rgba(255,255,255,.16);
+      background: rgba(255,255,255,.06);
+      color: white;
+      padding: 14px 16px;
+      border-radius: 14px;
+      cursor: pointer;
+      transition: transform .25s var(--ease), background .25s var(--ease), border-color .25s var(--ease);
+      user-select: none;
+    }
+    .btn:hover { transform: translateY(-2px); background: rgba(255,255,255,.10); border-color: rgba(255,255,255,.22); }
+    .btnPrimary {
+      background: linear-gradient(90deg, rgba(124,255,209,.22), rgba(122,167,255,.18), rgba(255,79,216,.16));
+      border-color: rgba(255,255,255,.22);
+    }
+    .enterHint {
+      color: rgba(255,255,255,.55);
+      font-size: 12px;
+      letter-spacing: .08em;
+      margin-top: 10px;
+    }
+
+    /* ==========================
+       LAYOUT SHELL
+    ========================== */
+    .wrap {
+      width: min(var(--max), 100%);
+      margin: 0 auto;
+      padding: var(--pad);
+      position: relative;
+      z-index: 2;
+    }
+
+    /* Top bar */
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      padding: 14px var(--pad);
+      background: linear-gradient(to bottom, rgba(0,0,0,.72), rgba(0,0,0,.18), transparent);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(255,255,255,.06);
+    }
+    .topbarInner {
+      width: min(var(--max), 100%);
+      margin: 0 auto;
+      display:flex;
+      align-items:center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .brand {
+      display:flex;
+      flex-direction:column;
+      gap: 4px;
+      min-width: 200px;
+    }
+    .brand b {
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      font-size: 13px;
+    }
+    .brand span {
+      color: rgba(255,255,255,.62);
+      font-size: 12px;
+      letter-spacing: .06em;
+    }
+
+    .barRight {
+      display:flex;
+      align-items:center;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .mini {
+      display:flex;
+      align-items:center;
+      gap: 10px;
+      padding: 10px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(0,0,0,.22);
+    }
+    .dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: linear-gradient(90deg, var(--accentA), var(--accentB), var(--accentC));
+      box-shadow: 0 0 18px rgba(124,255,209,.25);
+    }
+    .mini small { color: rgba(255,255,255,.62); letter-spacing: .08em; font-size: 11px; text-transform: uppercase; }
+    .mini strong { font-size: 12px; letter-spacing: .06em; }
+
+    .iconBtn {
+      width: 42px; height: 42px;
+      display:grid;
+      place-items:center;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.06);
+      cursor: pointer;
+      transition: transform .25s var(--ease), background .25s var(--ease), border-color .25s var(--ease);
+    }
+    .iconBtn:hover { transform: translateY(-2px); background: rgba(255,255,255,.10); border-color: rgba(255,255,255,.22); }
+    .iconBtn svg { width: 18px; height: 18px; opacity: .9; }
+
+    /* Hero */
+    .hero {
+      padding: clamp(40px, 7vw, 90px) 0 clamp(20px, 3vw, 30px);
+    }
+    .hero h1 {
+      margin: 0;
+      font-size: clamp(38px, 6vw, 80px);
+      line-height: 0.95;
+      letter-spacing: .02em;
+      text-transform: uppercase;
+    }
+    .hero h1 .gradText {
+      background: linear-gradient(90deg, var(--accentA), var(--accentB), var(--accentC));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    .hero p {
+      margin-top: 14px;
+      max-width: 70ch;
+      color: rgba(255,255,255,.72);
+      font-size: clamp(14px, 1.8vw, 18px);
+      line-height: 1.55;
+      letter-spacing: .02em;
+    }
+
+    .heroMeta {
+      margin-top: 22px;
+      display:flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items:center;
+    }
+    .chip {
+      padding: 10px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.06);
+      color: rgba(255,255,255,.72);
+      font-size: 12px;
+      letter-spacing: .10em;
+      text-transform: uppercase;
+    }
+
+    /* ==========================
+       GALLERY (masonry-ish)
+    ========================== */
+    .gallery {
+      padding: 18px 0 60px;
+    }
+    .grid {
+      columns: 3 320px;
+      column-gap: 18px;
+    }
+    @media (max-width: 900px) { .grid { columns: 2 260px; } }
+    @media (max-width: 560px) { .grid { columns: 1 280px; } }
+
+    .card {
+      break-inside: avoid;
+      margin: 0 0 18px;
+      border-radius: var(--radius);
+      overflow: hidden;
+      background: rgba(255,255,255,.03);
+      border: 1px solid rgba(255,255,255,.10);
+      box-shadow: 0 18px 60px rgba(0,0,0,.55);
+      transform: translateZ(0);
+      position: relative;
+    }
+
+    /* loading shimmer */
+    .card::before {
+      content:"";
+      position:absolute;
+      inset:0;
+      background: linear-gradient(110deg, transparent 0%, rgba(255,255,255,.06) 35%, transparent 70%);
+      transform: translateX(-120%);
+      animation: shimmer 1.2s linear infinite;
+      opacity: .9;
+    }
+    .card.loaded::before { display:none; }
+    @keyframes shimmer { to { transform: translateX(120%); } }
+
+    .thumb {
+      width: 100%;
+      display:block;
+      transform: scale(1.01);
+      filter: brightness(.92) contrast(1.05) saturate(1.02);
+      transition:
+        transform .5s var(--ease),
+        filter .5s var(--ease);
+      will-change: transform;
+      user-select:none;
+      -webkit-user-drag: none;
+    }
+
+    .card:hover .thumb {
+      transform: scale(1.08);
+      filter: brightness(1.06) contrast(1.1) saturate(1.06);
+    }
+
+    /* glow ring on hover */
+    .card::after {
+      content:"";
+      position:absolute;
+      inset:-2px;
+      border-radius: calc(var(--radius) + 2px);
+      background:
+        radial-gradient(circle at var(--mx, 50%) var(--my, 50%),
+          rgba(124,255,209,.32),
+          rgba(122,167,255,.22),
+          rgba(255,79,216,.18),
+          transparent 58%);
+      opacity: 0;
+      transition: opacity .35s var(--ease);
+      pointer-events:none;
+      filter: blur(18px);
+    }
+    .card:hover::after { opacity: .85; }
+
+    /* subtle tilt */
+    .card {
+	
+	.card::marker { display: none; }
+
+.card .wm {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.card .wm::after {
+  content: var(--watermark-text);
+  position: absolute;
+  bottom: 14px;
+  right: 16px;
+  font-size: clamp(14px, 1.6vw, 18px);
+  letter-spacing: 0.35em;
+  font-weight: 600;
+  color: rgba(255,255,255,0.25);
+  text-shadow:
+    0 0 8px rgba(255,255,255,0.25),
+    0 0 20px rgba(124,255,209,0.25);
+  mix-blend-mode: screen;
+  filter: blur(0.2px);
+}
+
+
+      transition: transform .35s var(--ease), border-color .35s var(--ease), background .35s var(--ease);
+      cursor: zoom-in;
+    }
+    .card:hover {
+      border-color: rgba(255,255,255,.22);
+      background: rgba(255,255,255,.04);
+    }
+
+    /* ==========================
+       LIGHTBOX
+    ========================== */
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      display: none;
+      z-index: 9998;
+      padding: clamp(14px, 2vw, 22px);
+      background: rgba(0,0,0,.82);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+    }
+    .lightbox.open { display: grid; place-items: center; }
+
+    .lbFrame {
+      width: min(1200px, 100%);
+      height: min(82vh, 860px);
+      border-radius: 22px;
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(0,0,0,.35);
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+    .lbImg {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+      transform: translateZ(0);
+      user-select:none;
+      -webkit-user-drag:none;
+    }
+
+    .lbTop {
+      position:absolute;
+      left: 14px;
+      right: 14px;
+      top: 12px;
+      display:flex;
+      align-items:center;
+      justify-content: space-between;
+      gap: 10px;
+      pointer-events:none;
+    }
+    .lbBadge {
+      pointer-events:none;
+      padding: 10px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(0,0,0,.35);
+      color: rgba(255,255,255,.74);
+      font-size: 12px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      display:flex;
+      align-items:center;
+      gap: 10px;
+    }
+    .lbBadge .bar {
+      width: 52px;
+      height: 6px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--accentA), var(--accentB), var(--accentC));
+      opacity: .9;
+    }
+
+    .lbBtns {
+      display:flex;
+      gap: 10px;
+      pointer-events:auto;
+    }
+    .lbBtn {
+      width: 46px; height: 46px;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.07);
+      display:grid;
+      place-items:center;
+      cursor:pointer;
+      transition: transform .25s var(--ease), background .25s var(--ease), border-color .25s var(--ease);
+    }
+    .lbBtn:hover { transform: translateY(-2px); background: rgba(255,255,255,.11); border-color: rgba(255,255,255,.22); }
+    .lbBtn svg { width: 18px; height: 18px; opacity: .9; }
+
+    .lbNav {
+      position:absolute;
+      inset: 0;
+      display:flex;
+      justify-content: space-between;
+      align-items:center;
+      pointer-events:none;
+      padding: 0 10px;
+    }
+    .lbNav .arrow {
+      pointer-events:auto;
+      width: 54px; height: 54px;
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(0,0,0,.28);
+      display:grid;
+      place-items:center;
+      cursor:pointer;
+      transition: transform .25s var(--ease), background .25s var(--ease), border-color .25s var(--ease);
+    }
+    .lbNav .arrow:hover { transform: scale(1.06); background: rgba(255,255,255,.08); border-color: rgba(255,255,255,.22); }
+    .lbNav .arrow svg { width: 22px; height: 22px; opacity: .9; }
+
+    /* ==========================
+       FOOTER
+    ========================== */
+    footer {
+      padding: 50px 0 60px;
+      color: rgba(255,255,255,.52);
+      border-top: 1px solid rgba(255,255,255,.06);
+      margin-top: 40px;
+    }
+    .footInner {
+      display:flex;
+      align-items:flex-start;
+      justify-content: space-between;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+    .footInner .left b {
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      font-size: 12px;
+      display:block;
+      margin-bottom: 8px;
+      color: rgba(255,255,255,.72);
+    }
+    .footInner .left small { display:block; max-width: 70ch; line-height: 1.5; }
+
+    .links {
+      display:flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+    .linkPill {
+      padding: 10px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.06);
+      color: rgba(255,255,255,.72);
+      font-size: 12px;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      transition: transform .25s var(--ease), background .25s var(--ease), border-color .25s var(--ease);
+    }
+    .linkPill:hover { transform: translateY(-2px); background: rgba(255,255,255,.10); border-color: rgba(255,255,255,.22); }
+
+    /* ==========================
+       REDUCED MOTION
+    ========================== */
+    @media (prefers-reduced-motion: reduce) {
+      .fx .grad, .fx .scanlines, .fx .grain { animation: none !important; }
+      .card::before { animation: none !important; }
+      .thumb, .card, .btn, .iconBtn, .lbBtn, .arrow { transition: none !important; }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- BACKGROUND FX -->
+  <div class="fx" aria-hidden="true">
+    <div class="grad g1"></div>
+    <div class="grad g2"></div>
+    <div class="grad g3"></div>
+    <div class="vignette"></div>
+    <div class="scanlines"></div>
+    <div class="grain"></div>
+  </div>
+  <div class="cursorGlow" id="cursorGlow" aria-hidden="true"></div>
+
+  <!-- ENTER SCREEN (starts music + unlocks audio) -->
+  <section id="enter">
+    <div class="enterCard">
+      <div class="enterTop">
+        <div class="pill">Audio Enabled</div>
+        <div class="pill">Best in Fullscreen</div>
+      </div>
+      <div class="enterTitle"><span class="accent">ENTER</span> PORTAL</div>
+      <div class="enterText">
+        Browsers block autoplay with sound. Tap once to start the experience and play music nonstop.
+        After you enter, it loops forever.
+      </div>
+      <div class="enterActions">
+        <button class="btn btnPrimary" id="enterBtn">Enter</button>
+        <button class="btn" id="muteBtn">Enter muted</button>
+      </div>
+      <div class="enterHint">Tip: Press <b>F</b> for fullscreen • <b>ESC</b> closes image • <b>← →</b> to navigate</div>
+    </div>
+  </section>
+
+  <!-- TOPBAR -->
+  <header class="topbar">
+    <div class="topbarInner">
+      <div class="brand">
+        <b id="brandName">BLENDER PORTFOLIO</b>
+        <span id="brandTag">3D • Lighting • Cinematic Renders</span>
+      </div>
+
+      <div class="barRight">
+        <div class="mini" title="View count">
+          <div class="dot"></div>
+          <div>
+            <small>Views</small><br>
+            <strong id="views">—</strong>
+          </div>
+        </div>
+
+        <button class="iconBtn" id="toggleMusic" title="Toggle music">
+          <!-- music icon -->
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M9 18V5l12-2v13"></path>
+            <circle cx="7" cy="18" r="3"></circle>
+            <circle cx="19" cy="16" r="3"></circle>
+          </svg>
+        </button>
+
+        <button class="iconBtn" id="goTop" title="Back to top">
+          <!-- up icon -->
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 19V5"></path>
+            <path d="M5 12l7-7 7 7"></path>
+          </svg>
+        </button>
+
+        <button class="iconBtn" id="fullscreen" title="Fullscreen (F)">
+          <!-- expand icon -->
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M8 3H5a2 2 0 0 0-2 2v3"></path>
+            <path d="M16 3h3a2 2 0 0 1 2 2v3"></path>
+            <path d="M8 21H5a2 2 0 0 1-2-2v-3"></path>
+            <path d="M16 21h3a2 2 0 0 0 2-2v-3"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN -->
+  <main class="wrap">
+    <section class="hero">
+      <h1><span class="gradText" id="heroName">𝓙𝓧𝓢𝓣𝓝</span></h1>
+      <p id="heroTag">3D • Lighting • Cinematic Renders</p>
+
+      <div class="heroMeta">
+        <div class="chip">PNG only</div>
+        <div class="chip">Tap renders to view</div>
+        <div class="chip">Keyboard nav</div>
+        <div class="chip">Cinematic mode</div>
+      </div>
+    </section>
+
+    <section class="gallery">
+      <div class="grid" id="grid"></div>
+    </section>
+
+    <footer>
+      <div class="footInner">
+        <div class="left">
+          <b id="footName">YOUR NAME</b>
+          <small>
+            Hello my name is 𝓙𝓧𝓢𝓣𝓝 
+		discord username:xgameplays0227	
+          </small>
+        </div>
+        <div class="links" id="links"></div>
+      </div>
+    </footer>
+  </main>
+
+  <!-- LIGHTBOX -->
+  <section class="lightbox" id="lightbox" aria-hidden="true">
+    <div class="lbFrame">
+      <div class="lbTop">
+        <div class="lbBadge">
+          <div class="bar"></div>
+          <div id="lbIndex">Render 1 / 8</div>
+        </div>
+        <div class="lbBtns">
+          <button class="lbBtn" id="lbDownload" title="Download image">
+            <!-- download -->
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+              <path d="M7 10l5 5 5-5"></path>
+              <path d="M12 15V3"></path>
+            </svg>
+          </button>
+          <button class="lbBtn" id="lbClose" title="Close (Esc)">
+            <!-- x -->
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M18 6L6 18"></path>
+              <path d="M6 6l12 12"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <img class="lbImg" id="lbImg" alt="Render" />
+
+      <div class="lbNav">
+        <button class="arrow" id="lbPrev" title="Previous (←)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M15 18l-6-6 6-6"></path>
+          </svg>
+        </button>
+        <button class="arrow" id="lbNext" title="Next (→)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M9 18l6-6-6-6"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- MUSIC -->
+  <audio id="music" loop preload="auto">
+    <source id="musicSrc" src="" type="audio/mpeg">
+  </audio>
+
+  <script>
+    // ==========================
+    // BOOT
+    // ==========================
+    const P = window.PORTFOLIO;
+
+    // Fill text
+    const setText = (id, t) => { const el = document.getElementById(id); if (el) el.textContent = t; };
+    setText("brandName", P.name || "BLENDER PORTFOLIO");
+    setText("heroName",  P.name || "BLENDER PORTFOLIO");
+    setText("footName",  P.name || "BLENDER PORTFOLIO");
+    setText("brandTag",  P.tagline || "");
+    setText("heroTag",   P.tagline || "");
+
+    // Music file
+    const music = document.getElementById("music");
+    const musicSrc = document.getElementById("musicSrc");
+    musicSrc.src = P.musicFile;
+    music.load();
+
+    // Build social links
+    const linksWrap = document.getElementById("links");
+    const mkLink = (label, href) => {
+      if (!href) return;
+      const a = document.createElement("a");
+      a.className = "linkPill";
+      a.href = href;
+      a.target = "_blank";
+      a.rel = "noopener noreferrer";
+      a.textContent = label;
+      linksWrap.appendChild(a);
+    };
+    mkLink("Instagram", P.links.instagram);
+    mkLink("ArtStation", P.links.artstation);
+    mkLink("Behance", P.links.behance);
+    mkLink("YouTube", P.links.youtube);
+    mkLink("Email", P.links.email ? `mailto:${P.links.email}` : "");
+
+    // ==========================
+    // VIEW COUNTER
+    // ==========================
+    // Default: local (per-device). Optional: CountAPI (global).
+    const viewsEl = document.getElementById("views");
+
+    async function updateViews() {
+      try {
+        if (P.countApi?.enabled) {
+          // ==========================
+          // COUNTAPI SETUP (REAL GLOBAL VIEWS)
+          // 1) Go to countapi.xyz (free)
+          // 2) Choose a namespace + key
+          // 3) Set enabled:true and fill namespace/key above
+          // This increments a public counter.
+          // ==========================
+          const ns = encodeURIComponent(P.countApi.namespace);
+          const key = encodeURIComponent(P.countApi.key);
+          const url = `https://api.countapi.xyz/hit/${ns}/${key}`;
+          const r = await fetch(url, { cache: "no-store" });
+          const j = await r.json();
+          viewsEl.textContent = j.value ?? "—";
+          return;
+        }
+
+        // Local fallback
+        const k = "portfolio_views_v1";
+        let v = Number(localStorage.getItem(k) || "0");
+        v += 1;
+        localStorage.setItem(k, String(v));
+        viewsEl.textContent = v.toLocaleString();
+      } catch (e) {
+        viewsEl.textContent = "—";
+      }
+    }
+    updateViews();
+
+    // ==========================
+    // GALLERY BUILD
+    // ==========================
+    const grid = document.getElementById("grid");
+    const images = [];
+
+    function imgPath(i) {
+      return `${P.imageFolder}/${i}.${P.imageExt}`;
+    }
+
+    for (let i = 1; i <= P.imageCount; i++) {
+      images.push(imgPath(i));
+
+      const card = document.createElement("div");
+      card.className = "card";
+      card.tabIndex = 0;
+      card.setAttribute("role", "button");
+      card.setAttribute("aria-label", `Open render ${i}`);
+
+      const img = document.createElement("img");
+      img.className = "thumb";
+      img.loading = "lazy";
+      img.decoding = "async";
+      img.alt = "";
+      img.src = imgPath(i);
+
+      img.addEventListener("load", () => card.classList.add("loaded"));
+      img.addEventListener("error", () => {
+        // If an image is missing, hide the card instead of showing broken icons
+        card.style.display = "none";
+      });
+
+      card.appendChild(img);
+
+      // open lightbox
+      card.addEventListener("click", () => openLightbox(i - 1));
+      card.addEventListener("keydown", (ev) => {
+        if (ev.key === "Enter" || ev.key === " ") {
+          ev.preventDefault();
+          openLightbox(i - 1);
+        }
+      });
+
+      // hover glow tracking
+      card.addEventListener("mousemove", (ev) => {
+        const r = card.getBoundingClientRect();
+        const x = ((ev.clientX - r.left) / r.width) * 100;
+        const y = ((ev.clientY - r.top) / r.height) * 100;
+        card.style.setProperty("--mx", `${x}%`);
+        card.style.setProperty("--my", `${y}%`);
+      });
+
+      // tilt
+      card.addEventListener("mousemove", (ev) => {
+        const r = card.getBoundingClientRect();
+        const px = (ev.clientX - r.left) / r.width;
+        const py = (ev.clientY - r.top) / r.height;
+        const rotY = (px - 0.5) * 10;   // left/right
+        const rotX = (0.5 - py) * 10;   // up/down
+        card.style.transform = `perspective(900px) rotateX(${rotX}deg) rotateY(${rotY}deg) translateY(-2px)`;
+      });
+      card.addEventListener("mouseleave", () => {
+        card.style.transform = "";
+      });
+
+      grid.appendChild(card);
+    }
+
+    // ==========================
+    // ENTER + MUSIC UNLOCK
+    // ==========================
+    const enter = document.getElementById("enter");
+    const enterBtn = document.getElementById("enterBtn");
+    const muteBtn  = document.getElementById("muteBtn");
+
+    async function doEnter({ muted }) {
+      try {
+        enter.style.opacity = "0";
+        enter.style.transition = "opacity .6s cubic-bezier(.2,.8,.2,1)";
+        setTimeout(() => enter.remove(), 650);
+
+        music.muted = !!muted;
+        music.volume = 1;
+
+        // This play() must happen after user action (click/tap)
+        await music.play();
+      } catch (e) {
+        // If play fails, keep muted true (some devices)
+        music.muted = true;
+      }
+    }
+
+    enterBtn.addEventListener("click", () => doEnter({ muted: false }));
+    muteBtn.addEventListener("click", () => doEnter({ muted: true }));
+
+    // ==========================
+    // MUSIC BUTTON
+    // ==========================
+    const toggleMusic = document.getElementById("toggleMusic");
+    toggleMusic.addEventListener("click", async () => {
+      try {
+        if (music.paused) await music.play();
+        else music.pause();
+      } catch (e) {}
+    });
+
+    // ==========================
+    // SCROLL TOP
+    // ==========================
+    document.getElementById("goTop").addEventListener("click", () => {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+
+    // ==========================
+    // FULLSCREEN
+    // ==========================
+    const fsBtn = document.getElementById("fullscreen");
+    async function toggleFullscreen() {
+      try {
+        if (!document.fullscreenElement) {
+          await document.documentElement.requestFullscreen();
+        } else {
+          await document.exitFullscreen();
+        }
+      } catch (e) {}
+    }
+    fsBtn.addEventListener("click", toggleFullscreen);
+
+    // ==========================
+    // CURSOR GLOW
+    // ==========================
+    const glow = document.getElementById("cursorGlow");
+    let glowX = innerWidth/2, glowY = innerHeight/2, tx = glowX, ty = glowY;
+    window.addEventListener("mousemove", (e) => { tx = e.clientX; ty = e.clientY; glow.style.opacity = ".85"; });
+    window.addEventListener("mouseleave", () => { glow.style.opacity = ".25"; });
+
+    function animateGlow() {
+      glowX += (tx - glowX) * 0.12;
+      glowY += (ty - glowY) * 0.12;
+      glow.style.left = glowX + "px";
+      glow.style.top  = glowY + "px";
+      requestAnimationFrame(animateGlow);
+    }
+    animateGlow();
+
+    // ==========================
+    // LIGHTBOX
+    // ==========================
+    const lb = document.getElementById("lightbox");
+    const lbImg = document.getElementById("lbImg");
+    const lbIndex = document.getElementById("lbIndex");
+    const lbClose = document.getElementById("lbClose");
+    const lbPrev = document.getElementById("lbPrev");
+    const lbNext = document.getElementById("lbNext");
+    const lbDownload = document.getElementById("lbDownload");
+
+    let current = 0;
+
+    function setLb(i) {
+      current = (i + images.length) % images.length;
+      const src = images[current];
+      lbImg.src = src;
+      lbIndex.textContent = `Render ${current + 1} / ${images.length}`;
+      lbDownload.onclick = () => {
+        const a = document.createElement("a");
+        a.href = src;
+        a.download = `render-${current + 1}.${P.imageExt}`;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+      };
+    }
+
+    function openLightbox(i) {
+      setLb(i);
+      lb.classList.add("open");
+      lb.setAttribute("aria-hidden", "false");
+      document.body.style.overflow = "hidden";
+    }
+
+    function closeLightbox() {
+      lb.classList.remove("open");
+      lb.setAttribute("aria-hidden", "true");
+      document.body.style.overflow = "";
+      lbImg.src = "";
+    }
+
+    lbClose.addEventListener("click", closeLightbox);
+    lbPrev.addEventListener("click", () => setLb(current - 1));
+    lbNext.addEventListener("click", () => setLb(current + 1));
+
+    // Click outside image to close
+    lb.addEventListener("click", (e) => {
+      if (e.target === lb) closeLightbox();
+    });
+
+    // Keyboard controls
+    window.addEventListener("keydown", (e) => {
+      if (e.key.toLowerCase() === "f") toggleFullscreen();
+
+      if (!lb.classList.contains("open")) return;
+      if (e.key === "Escape") closeLightbox();
+      if (e.key === "ArrowLeft") setLb(current - 1);
+      if (e.key === "ArrowRight") setLb(current + 1);
+    });
+
+    // ==========================
+    // Mobile: reduce glow size
+    // ==========================
+    if (matchMedia("(max-width: 700px)").matches) {
+      glow.style.width = "420px";
+      glow.style.height = "420px";
+      glow.style.filter = "blur(26px)";
+    }
+  </script>
+</body>
+</html>
